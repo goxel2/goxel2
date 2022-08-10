@@ -97,7 +97,6 @@ if target_os == 'darwin':
     env.Append(LIBS=['m', 'glfw', 'objc'])
     # Fix warning in noc_file_dialog (the code should be fixed instead).
     env.Append(CCFLAGS=['-Wno-deprecated-declarations'])
-    env['sound'] = False
 
 # Add external libs.
 env.Append(CPPPATH=['lib/uthash'])
