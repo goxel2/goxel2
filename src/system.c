@@ -143,6 +143,7 @@ int sys_list_dir(const char *dirpath,
                                  void *user),
                  void *user)
 {
+    int i = 0;
     DIR *dir;
     struct dirent *dirent;
     dir = opendir(dirpath);
@@ -150,9 +151,10 @@ int sys_list_dir(const char *dirpath,
     while ((dirent = readdir(dir))) {
         if (dirent->d_name[0] == '.') continue;
         if (callback(dirpath, dirent->d_name, user) != 0) break;
+        i++;
     }
     closedir(dir);
-    return 0;
+    return i;
 }
 
 int sys_delete_file(const char *path)
