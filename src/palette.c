@@ -210,11 +210,11 @@ void palette_load_all(palette_t **list)
 	char *dir;
 
 	// If Home Available
-	if (sys_get_user_dir()) {
+	if (sys_get_user_dir() != NULL) {
 		asprintf(&dir, "%s/palettes/", sys_get_user_dir());
-		if (!sys_list_dir(dir, on_palette2, list)) {
-			// if we can't read in palettes, create directory
-			// and save all built-in palettes there
+
+		// if there are 0 files in palettes dir, extract them.
+		if (sys_list_dir(dir, on_palette2, list) == 0) {
 			sys_make_dir(dir);
 			assets_list("data/palettes/", list, on_palette3);
 		}
