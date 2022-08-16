@@ -32,6 +32,8 @@
 *  - xxHash source repository : https://github.com/Cyan4973/xxHash
 */
 
+// Explicitly Defined
+#define XXH_NO_LONG_LONG
 
 /* *************************************
 *  Tuning parameters

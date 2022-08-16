@@ -60,12 +60,22 @@ if env['mode'] in ('profile', 'debug'):
 env.Append(CPPPATH=['src'])
 env.Append(CCFLAGS=['-include', '$config_file'])
 
+def GatherFiles(Directories):
+    if type(Directories) is not list:
+        Directories = [Directories];
+
+    files = [];
+    for directory in Directories:
+        for root, dirnames, filenames in os.walk(directory):
+            for filename in filenames:
+                if filename.endswith('.c') or filename.endswith('.cpp'):
+                    files.append(os.path.join(root, filename))
+
+    return files
+
 # Get all the c and c++ files in src, recursively.
 sources = []
-for root, dirnames, filenames in os.walk('src'):
-    for filename in filenames:
-        if filename.endswith('.c') or filename.endswith('.cpp'):
-            sources.append(os.path.join(root, filename))
+sources += GatherFiles(['src', 'lib/lua-5.4.4', 'lib/imgui', 'lib/xxhash'])
 
 # Check for libpng.
 if conf.CheckLibWithHeader('libpng', 'png.h', 'c'):
@@ -99,6 +109,7 @@ if target_os == 'darwin':
     env.Append(CCFLAGS=['-Wno-deprecated-declarations'])
 
 # Add external libs.
+env.Append(CPPPATH=['lib/'])
 env.Append(CPPPATH=['lib/uthash'])
 env.Append(CPPPATH=['lib/stb'])
 env.Append(CPPPATH=['lib/noc'])
