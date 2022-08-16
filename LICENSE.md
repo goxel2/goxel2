@@ -1,6 +1,3 @@
-Original Goxel's Code is distributed under GPL v3 License, while any new
-files and code are distributed under the unlicense license.
-
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
