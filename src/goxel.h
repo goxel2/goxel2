@@ -507,6 +507,7 @@ typedef struct goxel
 
 	mesh_t     *mask; // Global selection mask mesh.
 	float      selection[4][4];   // The selection box.
+	int        mask_mode;
 
 	struct {
 		float  rotation[4];
