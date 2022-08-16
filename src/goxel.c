@@ -911,6 +911,9 @@ void goxel_render_view(const float viewport[4], bool render_mode)
         int p[3], aabb[2][3];
         float box[4][4];
         while (mesh_iter(&iter, p)) {
+            if (goxel.tool->flags & TOOL_SHOW_MASK)
+                render_mesh(rend, goxel.mask, NULL, EFFECT_GRID_ONLY);
+
             mesh_get_block_aabb(p, aabb);
             bbox_from_aabb(box, aabb);
             render_box(rend, box, NULL, EFFECT_WIREFRAME);

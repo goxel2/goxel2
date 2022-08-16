@@ -112,14 +112,14 @@
 // CHECK is similar to an assert, but the condition is tested even in release
 // mode.
 #if DEBUG
-    #define CHECK(c) assert(c)
+	#define CHECK(c) assert(c)
 #else
-    #define CHECK(c) do { \
-        if (!(c)) { \
-            LOG_E("Error %s %s %d", __func__,  __FILE__, __LINE__); \
-            exit(-1); \
-        } \
-    } while (0)
+	#define CHECK(c) do { \
+		if (!(c)) { \
+			LOG_E("Error %s %s %d", __func__,  __FILE__, __LINE__); \
+			exit(-1); \
+		} \
+	} while (0)
 #endif
 
 // I redefine asprintf so that if the function fails, we just crash the
@@ -197,20 +197,20 @@
  * Safe min function.
  */
 #define min(a, b) ({ \
-      __typeof__ (a) _a = (a); \
-      __typeof__ (b) _b = (b); \
-      _a < _b ? _a : _b; \
-      })
+	  __typeof__ (a) _a = (a); \
+	  __typeof__ (b) _b = (b); \
+	  _a < _b ? _a : _b; \
+	  })
 
 /*
  * Macro: max
  * Safe max function.
  */
 #define max(a, b) ({ \
-      __typeof__ (a) _a = (a); \
-      __typeof__ (b) _b = (b); \
-      _a > _b ? _a : _b; \
-      })
+	  __typeof__ (a) _a = (a); \
+	  __typeof__ (b) _b = (b); \
+	  _a > _b ? _a : _b; \
+	  })
 
 /*
  * Macro: max3
@@ -238,9 +238,9 @@
  *   +1 if a > b, -1 if a < b, 0 if a == b.
  */
 #define cmp(a, b) ({ \
-    __typeof__ (a) _a = (a); \
-    __typeof__ (b) _b = (b); \
-    (_a > _b) ? +1 : (_a < _b) ? -1 : 0; \
+	__typeof__ (a) _a = (a); \
+	__typeof__ (b) _b = (b); \
+	(_a > _b) ? +1 : (_a < _b) ? -1 : 0; \
 })
 
 /* Function: smoothstep
@@ -255,8 +255,8 @@
  */
 static inline float smoothstep(float edge0, float edge1, float x)
 {
-    x = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-    return x * x * (3.0f - 2.0f * x);
+	x = clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
+	return x * x * (3.0f - 2.0f * x);
 }
 
 /*
@@ -267,7 +267,7 @@ static inline float smoothstep(float edge0, float edge1, float x)
  */
 static inline float mix(float x, float y, float t)
 {
-    return (1.0 - t) * x + t * y;
+	return (1.0 - t) * x + t * y;
 }
 
 /* Function: set_flag
@@ -280,7 +280,7 @@ static inline float mix(float x, float y, float t)
  */
 static inline void set_flag(int *x, int flag, bool v)
 {
-    v ? (*x |= flag) : (*x &= ~flag);
+	v ? (*x |= flag) : (*x &= ~flag);
 }
 
 /*
@@ -350,73 +350,73 @@ bool str_startswith(const char *s1, const char *s2);
  *   out        - Output of the computed object coordinates.
  */
 void unproject(const float win[3], const float model[4][4],
-               const float proj[4][4], const float viewport[4],
-               float out[3]);
+			   const float proj[4][4], const float viewport[4],
+			   float out[3]);
 
 // #### Dialogs ################
 enum {
-    DIALOG_FLAG_SAVE    = 1 << 0,
-    DIALOG_FLAG_OPEN    = 1 << 1,
-    DIALOG_FLAG_DIR     = 1 << 2,
+	DIALOG_FLAG_SAVE    = 1 << 0,
+	DIALOG_FLAG_OPEN    = 1 << 1,
+	DIALOG_FLAG_DIR     = 1 << 2,
 };
 
 // All the icons positions inside icon.png (as Y*8 + X + 1).
 enum {
-    ICON_NULL = 0,
+	ICON_NULL = 0,
 
-    ICON_TOOL_BRUSH = 1,
-    ICON_TOOL_PICK = 2,
-    ICON_TOOL_SHAPE = 3,
-    ICON_TOOL_PLANE = 4,
-    ICON_TOOL_LASER = 5,
-    ICON_TOOL_MOVE = 6,
-    ICON_TOOL_EXTRUDE = 7,
-    ICON_TOOL_FUZZY_SELECT = 8,
+	ICON_TOOL_BRUSH = 1,
+	ICON_TOOL_PICK = 2,
+	ICON_TOOL_SHAPE = 3,
+	ICON_TOOL_PLANE = 4,
+	ICON_TOOL_LASER = 5,
+	ICON_TOOL_MOVE = 6,
+	ICON_TOOL_EXTRUDE = 7,
+	ICON_TOOL_FUZZY_SELECT = 8,
 
-    ICON_MODE_ADD = 9,
-    ICON_MODE_SUB = 10,
-    ICON_MODE_PAINT = 11,
-    ICON_SHAPE_CUBE = 12,
-    ICON_SHAPE_SPHERE = 13,
-    ICON_SHAPE_CYLINDER = 14,
-    ICON_TOOL_SELECTION = 15,
-    ICON_TOOL_LINE = 16,
+	ICON_MODE_ADD = 9,
+	ICON_MODE_SUB = 10,
+	ICON_MODE_PAINT = 11,
+	ICON_SHAPE_CUBE = 12,
+	ICON_SHAPE_SPHERE = 13,
+	ICON_SHAPE_CYLINDER = 14,
+	ICON_TOOL_SELECTION = 15,
+	ICON_TOOL_LINE = 16,
 
-    ICON_ADD = 17,
-    ICON_REMOVE = 18,
-    ICON_ARROW_BACK = 19,
-    ICON_ARROW_FORWARD = 20,
-    ICON_LINK = 21,
-    ICON_MENU = 22,
-    ICON_DELETE = 23,
-    ICON_TOOL_PROCEDURAL = 24,
+	ICON_ADD = 17,
+	ICON_REMOVE = 18,
+	ICON_ARROW_BACK = 19,
+	ICON_ARROW_FORWARD = 20,
+	ICON_LINK = 21,
+	ICON_MENU = 22,
+	ICON_DELETE = 23,
+	ICON_TOOL_PROCEDURAL = 24,
 
-    ICON_VISIBILITY = 25,
-    ICON_VISIBILITY_OFF = 26,
-    ICON_ARROW_DOWNWARD = 27,
-    ICON_ARROW_UPWARD = 28,
-    ICON_EDIT = 29,
-    ICON_COPY = 30,
-    ICON_GALLERY = 31,
-    ICON_INFO = 32,
+	ICON_VISIBILITY = 25,
+	ICON_VISIBILITY_OFF = 26,
+	ICON_ARROW_DOWNWARD = 27,
+	ICON_ARROW_UPWARD = 28,
+	ICON_EDIT = 29,
+	ICON_COPY = 30,
+	ICON_GALLERY = 31,
+	ICON_INFO = 32,
 
-    ICON_SETTINGS = 33,
-    ICON_CLOUD = 34,
-    ICON_SHAPE = 35,
-    ICON_CLOSE = 36,
+	ICON_SETTINGS = 33,
+	ICON_CLOUD = 34,
+	ICON_SHAPE = 35,
+	ICON_CLOSE = 36,
 
-    ICON_TOOLS = 41,
-    ICON_PALETTE = 42,
-    ICON_LAYERS = 43,
-    ICON_RENDER = 44,
-    ICON_CAMERA = 45,
-    ICON_IMAGE = 46,
-    ICON_EXPORT = 47,
-    ICON_DEBUG = 48,
+	ICON_TOOLS = 41,
+	ICON_PALETTE = 42,
+	ICON_LAYERS = 43,
+	ICON_RENDER = 44,
+	ICON_CAMERA = 45,
+	ICON_IMAGE = 46,
+	ICON_EXPORT = 47,
+	ICON_DEBUG = 48,
 
-    ICON_VIEW = 49,
-    ICON_MATERIAL = 50,
-    ICON_LIGHT = 51,
+	ICON_VIEW = 49,
+	ICON_MATERIAL = 50,
+	ICON_LIGHT = 51,
 };
 
 /*
@@ -433,115 +433,116 @@ enum {
 
 // Generate an optimal palette whith a fixed number of colors from a mesh.
 void quantization_gen_palette(const mesh_t *mesh, int nb,
-                              uint8_t (*palette)[4]);
+							  uint8_t (*palette)[4]);
 
 // #### Goxel : core object ####
 
 // Flags to set where the mouse snap.  In order of priority.
 enum {
-    SNAP_IMAGE_BOX      = 1 << 0,
-    SNAP_SELECTION_IN   = 1 << 1,
-    SNAP_SELECTION_OUT  = 1 << 2,
-    SNAP_MESH           = 1 << 3,
-    SNAP_PLANE          = 1 << 4,
-    SNAP_CAMERA         = 1 << 5, // Used for laser tool.
-    SNAP_LAYER_OUT      = 1 << 6, // Snap the layer box.
+	SNAP_IMAGE_BOX      = 1 << 0,
+	SNAP_SELECTION_IN   = 1 << 1,
+	SNAP_SELECTION_OUT  = 1 << 2,
+	SNAP_MESH           = 1 << 3,
+	SNAP_PLANE          = 1 << 4,
+	SNAP_CAMERA         = 1 << 5, // Used for laser tool.
+	SNAP_LAYER_OUT      = 1 << 6, // Snap the layer box.
 
-    SNAP_ROUNDED        = 1 << 8, // Round the result.
+	SNAP_ROUNDED        = 1 << 8, // Round the result.
 };
 
 typedef struct goxel
 {
-    int        screen_size[2];
-    float      screen_scale;
-    image_t    *image;
+	int        screen_size[2];
+	float      screen_scale;
+	image_t    *image;
 
-    // Flag so that we reinit OpenGL after the context has been killed.
-    bool       graphics_initialized;
-    // We can't reset the graphics in the middle of the gui, so use this.
-    // for testing.
-    bool       request_test_graphic_release;
+	// Flag so that we reinit OpenGL after the context has been killed.
+	bool       graphics_initialized;
+	// We can't reset the graphics in the middle of the gui, so use this.
+	// for testing.
+	bool       request_test_graphic_release;
 
-    // Tools can set this mesh and it will replace the current layer mesh
-    // during render.
-    mesh_t     *tool_mesh;
+	// Tools can set this mesh and it will replace the current layer mesh
+	// during render.
+	mesh_t     *tool_mesh;
 
-    mesh_t     *layers_mesh_;
-    uint32_t   layers_mesh_hash;
+	mesh_t     *layers_mesh_;
+	uint32_t   layers_mesh_hash;
 
-    mesh_t     *render_mesh_; // All the layers + tool mesh.
-    uint32_t   render_mesh_hash;
+	mesh_t     *render_mesh_; // All the layers + tool mesh.
+	uint32_t   render_mesh_hash;
 
-    layer_t    *render_layers;
-    uint32_t   render_layers_hash;
+	layer_t    *render_layers;
+	uint32_t   render_layers_hash;
 
-    struct     {
-        mesh_t *mesh;
-        float  box[4][4];
-    } clipboard;
+	struct     {
+		mesh_t *mesh;
+		float  box[4][4];
+	} clipboard;
 
-    int        snap_mask;    // Global snap mask (can edit in the GUI).
-    float      snap_offset;  // Only for brush tool, remove that?
+	int        snap_mask;    // Global snap mask (can edit in the GUI).
+	float      snap_offset;  // Only for brush tool, remove that?
 
-    float      plane[4][4];         // The snapping plane.
-    bool       show_export_viewport;
+	float      plane[4][4];         // The snapping plane.
+	bool       show_export_viewport;
 
-    uint8_t    back_color[4];
-    uint8_t    grid_color[4];
-    uint8_t    image_box_color[4];
-    bool       hide_box;
+	uint8_t    back_color[4];
+	uint8_t    grid_color[4];
+	uint8_t    image_box_color[4];
+	bool       hide_box;
 
-    texture_t  *pick_fbo;
-    painter_t  painter;
-    renderer_t rend;
+	texture_t  *pick_fbo;
+	painter_t  painter;
+	renderer_t rend;
 
-    cursor_t   cursor;
+	cursor_t   cursor;
 
-    tool_t     *tool;
-    float      tool_radius;
-    bool       no_edit; // Disable editing.
+	tool_t     *tool;
+	float      tool_radius;
+	bool       no_edit; // Disable editing.
 
-    // Some state for the tool iter functions.
-    float      tool_plane[4][4];
-    int        tool_drag_mode; // 0: move, 1: resize.
+	// Some state for the tool iter functions.
+	float      tool_plane[4][4];
+	int        tool_drag_mode; // 0: move, 1: resize.
 
-    float      selection[4][4];   // The selection box.
+	mesh_t     *mask; // Global selection mask mesh.
+	float      selection[4][4];   // The selection box.
 
-    struct {
-        float  rotation[4];
-        float  pos[2];
-        float  camera_ofs[3];
-        float  camera_mat[4][4];
-    } move_origin;
+	struct {
+		float  rotation[4];
+		float  pos[2];
+		float  camera_ofs[3];
+		float  camera_mat[4][4];
+	} move_origin;
 
-    palette_t  *palettes;   // The list of all the palettes
-    palette_t  *palette;    // The current color palette
-    char       *help_text;  // Seen in the bottom of the screen.
-    char       *hint_text;  // Seen in the bottom of the screen.
+	palette_t  *palettes;   // The list of all the palettes
+	palette_t  *palette;    // The current color palette
+	char       *help_text;  // Seen in the bottom of the screen.
+	char       *hint_text;  // Seen in the bottom of the screen.
 
-    // These Are Calculated in Main Loop, i.e main.c
-    double     delta_time;   // Elapsed time since last frame (sec)
-    double     frame_time;   // Clock time at beginning of the frame (sec)
-    double     fps;          // Average fps.
-    bool       vsyncEnabled; // Whether VSync is Enabled Or Not.
+	// These Are Calculated in Main Loop, i.e main.c
+	double     delta_time;   // Elapsed time since last frame (sec)
+	double     frame_time;   // Clock time at beginning of the frame (sec)
+	double     fps;          // Average fps.
+	bool       vsyncEnabled; // Whether VSync is Enabled Or Not.
 
-    bool       quit;        // Set to true to quit the application.
-    int        view_effects; // EFFECT_WIREFRAME | EFFECT_GRID | EFFECT_EDGES
+	bool       quit;        // Set to true to quit the application.
+	int        view_effects; // EFFECT_WIREFRAME | EFFECT_GRID | EFFECT_EDGES
 
-    // All the gestures we listen to.  Up to 16.
-    gesture_t *gestures[16];
-    int gestures_count;
+	// All the gestures we listen to.  Up to 16.
+	gesture_t *gestures[16];
+	int gestures_count;
 
-    pathtracer_t pathtracer;
+	pathtracer_t pathtracer;
 
-    // Some stats for the UI.
-    struct {
-        void (*current_panel)(void);
-        float panel_width;
-        float viewport[4];
-    } gui;
+	// Some stats for the UI.
+	struct {
+		void (*current_panel)(void);
+		float panel_width;
+		float viewport[4];
+	} gui;
 
-    bool editorLocked;
+	bool editorLocked;
 } goxel_t;
 
 // the global goxel instance.
@@ -573,8 +574,8 @@ void goxel_release_graphics(void);
 void goxel_on_low_memory(void);
 
 int goxel_unproject(const float viewport[4],
-                    const float pos[2], int snap_mask, float offset,
-                    float out[3], float normal[3]);
+					const float pos[2], int snap_mask, float offset,
+					float out[3], float normal[3]);
 
 void goxel_render_view(const float viewport[4], bool render_mode);
 void goxel_render_export_view(const float viewport[4]);
@@ -582,7 +583,7 @@ void goxel_render_export_view(const float viewport[4]);
 // XXX: change the name since we also call it when the mouse get out of
 // the view.
 void goxel_mouse_in_view(const float viewport[4], const inputs_t *inputs,
-                         bool capture_keys);
+						 bool capture_keys);
 
 const mesh_t *goxel_get_layers_mesh(const image_t *img);
 const mesh_t *goxel_get_render_mesh(const image_t *img);
@@ -618,9 +619,9 @@ int import_as_gox(image_t *img, const char *path);
 // Iter info of a gox file, without actually reading it.
 // For the moment only returns the image preview if available.
 int gox_iter_infos(const char *path,
-                   int (*callback)(const char *attr, int size,
-                                   void *value, void *user),
-                   void *user);
+				   int (*callback)(const char *attr, int size,
+								   void *value, void *user),
+				   void *user);
 
 // Section: box_edit
 /*
