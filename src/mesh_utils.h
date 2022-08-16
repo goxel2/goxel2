@@ -37,18 +37,20 @@
  * MODE_PAINT       - Set the color of the destination using the source.
  * MODE_MAX         - Set alpha to the max of the source and destination.
  * MODE_INTERSECT   - Set alpha to the min of the source and destination.
+ * MODE_INTERSECT_FILL - Like intersect but use the color of the source.
  * MODE_MULT_ALPHA  - Multiply the source and dest using source alpha.
  */
 enum {
-    MODE_NULL,
-    MODE_OVER,
-    MODE_SUB,
-    MODE_SUB_CLAMP,
-    MODE_PAINT,
-    MODE_MAX,
-    MODE_INTERSECT,
-    MODE_MULT_ALPHA,
-    MODE_REPLACE,
+	MODE_NULL,
+	MODE_OVER,
+	MODE_SUB,
+	MODE_SUB_CLAMP,
+	MODE_PAINT,
+	MODE_MAX,
+	MODE_INTERSECT,
+	MODE_INTERSECT_FILL,
+	MODE_MULT_ALPHA,
+	MODE_REPLACE,
 };
 
 
@@ -56,15 +58,15 @@ enum {
 // XXX: we can probably make it smaller.
 typedef struct voxel_vertex
 {
-    uint8_t  pos[3]                     __attribute__((aligned(4)));
-    int8_t   normal[3]                  __attribute__((aligned(4)));
-    int8_t   tangent[3]                 __attribute__((aligned(4)));
-    int8_t   gradient[3]                __attribute__((aligned(4)));
-    uint8_t  color[4]                   __attribute__((aligned(4)));
-    uint16_t pos_data                   __attribute__((aligned(4)));
-    uint8_t  uv[2]                      __attribute__((aligned(4)));
-    uint8_t  occlusion_uv[2]            __attribute__((aligned(4)));
-    uint8_t  bump_uv[2]                 __attribute__((aligned(4)));
+	uint8_t  pos[3]                     __attribute__((aligned(4)));
+	int8_t   normal[3]                  __attribute__((aligned(4)));
+	int8_t   tangent[3]                 __attribute__((aligned(4)));
+	int8_t   gradient[3]                __attribute__((aligned(4)));
+	uint8_t  color[4]                   __attribute__((aligned(4)));
+	uint16_t pos_data                   __attribute__((aligned(4)));
+	uint8_t  uv[2]                      __attribute__((aligned(4)));
+	uint8_t  occlusion_uv[2]            __attribute__((aligned(4)));
+	uint8_t  bump_uv[2]                 __attribute__((aligned(4)));
 } voxel_vertex_t;
 
 
@@ -75,13 +77,13 @@ typedef struct voxel_vertex
 // Attributes:
 //   mode - Define how colors are applied.  One of the <MODE> enum value.
 typedef struct painter {
-    int             mode;
-    const shape_t   *shape;
-    uint8_t         color[4];
-    float           smoothness;
-    int             symmetry; // bitfield X Y Z
-    float           symmetry_origin[3];
-    float           (*box)[4][4];     // Clipping box (can be null)
+	int             mode;
+	const shape_t   *shape;
+	uint8_t         color[4];
+	float           smoothness;
+	int             symmetry; // bitfield X Y Z
+	float           symmetry_origin[3];
+	float           (*box)[4][4];     // Clipping box (can be null)
 } painter_t;
 
 
@@ -108,8 +110,8 @@ void mesh_op(mesh_t *mesh, const painter_t *painter, const float box[4][4]);
 
 // XXX: to cleanup.
 void mesh_extrude(mesh_t *mesh,
-                  const float plane[4][4],
-                  const float box[4][4]);
+				  const float plane[4][4],
+				  const float box[4][4]);
 
 /* Function: mesh_blit
  *
@@ -128,8 +130,8 @@ void mesh_extrude(mesh_t *mesh,
  *   iter - Optional iterator for optimized access.
  */
 void mesh_blit(mesh_t *mesh, const uint8_t *data,
-               int x, int y, int z, int w, int h, int d,
-               mesh_iterator_t *iter);
+			   int x, int y, int z, int w, int h, int d,
+			   mesh_iterator_t *iter);
 
 void mesh_move(mesh_t *mesh, const float mat[4][4]);
 
@@ -137,12 +139,12 @@ void mesh_shift_alpha(mesh_t *mesh, int v);
 
 // Compute the selection mask for a given condition.
 int mesh_select(const mesh_t *mesh,
-                const int start_pos[3],
-                int (*cond)(void *user, const mesh_t *mesh,
-                            const int base_pos[3],
-                            const int new_pos[3],
-                            mesh_accessor_t *mesh_accessor),
-                void *user, mesh_t *selection);
+				const int start_pos[3],
+				int (*cond)(void *user, const mesh_t *mesh,
+							const int base_pos[3],
+							const int new_pos[3],
+							mesh_accessor_t *mesh_accessor),
+				void *user, mesh_t *selection);
 
 /*
  * Function: mesh_merge
@@ -156,7 +158,7 @@ int mesh_select(const mesh_t *mesh,
  *            set to NULL.
  */
 void mesh_merge(mesh_t *mesh, const mesh_t *other, int mode,
-                const uint8_t color[4]);
+				const uint8_t color[4]);
 
 /*
  * Function: mesh_generate_vertices
@@ -175,8 +177,8 @@ void mesh_merge(mesh_t *mesh, const mesh_t *other, int mode,
  *                can use more.
  */
 int mesh_generate_vertices(const mesh_t *mesh, const int block_pos[3],
-                           int effects, voxel_vertex_t *out,
-                           int *size, int *subdivide);
+						   int effects, voxel_vertex_t *out,
+						   int *size, int *subdivide);
 
 // XXX: use int[2][3] for the box?
 void mesh_crop(mesh_t *mesh, const float box[4][4]);
