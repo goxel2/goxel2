@@ -1,5 +1,7 @@
 # Goxel2
 
+goxel2 is a voxel art editor & started as a fork of [goxel](https://github.com/guillaumechereau/goxel/)
+
 [![Stable Release](https://github.com/goxel2/goxel2/actions/workflows/release.yml/badge.svg)](https://github.com/goxel2/goxel2/releases)
 [![Nightly Release](https://github.com/goxel2/goxel2/actions/workflows/nightly.yml/badge.svg)](https://github.com/goxel2/goxel2/actions/workflows/nightly.yml)
 
