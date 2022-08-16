@@ -1001,8 +1001,7 @@ const mesh_t *goxel_get_render_mesh(const image_t *img)
 	return goxel.render_mesh_;
 }
 
-const layer_t *goxel_get_render_layers(bool with_tool_preview)
-{
+const layer_t *goxel_get_render_layers(bool with_tool_preview) {
 	uint32_t hash, k;
 	layer_t *l, *layer, *tmp;
 
@@ -1015,13 +1014,6 @@ const layer_t *goxel_get_render_layers(bool with_tool_preview)
 	if (hash != goxel.render_layers_hash) {
 		goxel.render_layers_hash = hash;
 		image_update(goxel.image);
-
-		// Use the mask in priority.
-		if (!mesh_is_empty(goxel.mask)) {
-			mesh_merge(new_layer->mesh, goxel.mask, MODE_INTERSECT, NULL);
-			mesh_merge(layer->mesh, goxel.mask , MODE_SUB, NULL);
-			return;
-		}
 
 		DL_FOREACH_SAFE(goxel.render_layers, layer, tmp) {
 			DL_DELETE(goxel.render_layers, layer);
@@ -1171,6 +1163,14 @@ static void a_cut_as_new_layer(void)
 	const float (*box)[4][4] = &goxel.selection;
 
 	new_layer = image_duplicate_layer(img, layer);
+
+	// Use the mask in priority.
+	if (!mesh_is_empty(goxel.mask)) {
+		mesh_merge(new_layer->mesh, goxel.mask, MODE_INTERSECT, NULL);
+		mesh_merge(layer->mesh, goxel.mask , MODE_SUB, NULL);
+		return;
+	}
+
 	painter = (painter_t) {
 		.shape = &shape_cube,
 		.mode = MODE_INTERSECT,
