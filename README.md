@@ -59,6 +59,10 @@ You can download latest stable release from [here](https://github.com/pegvin/gox
 goxel2 can be extended via Lua, [Read more...](https://github.com/goxel2/goxel2/wiki/Lua-API)
 
 ---
+## License
+while the original License of goxel, GPL v3 is still maintained any new files & code are distributed under the [Unlicense License](./LICENSE.md).
+
+---
 ## Building from source
 
 The building system uses scons.  You can compile in debug with 'scons', and in
