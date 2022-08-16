@@ -1,6 +1,5 @@
 // Support for Ace of Spades map files (vxl)
-// Original Author: https://github.com/guillaumechereau
-// Improved By: https://github.com/xtreme8000
+// Author: https://github.com/xtreme8000
 
 #include "goxel.h"
 #include "file_format.h"
