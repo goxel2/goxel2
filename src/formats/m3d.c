@@ -164,7 +164,7 @@ enum {
 
 /*** m3d reader ***/
 
-static int import_as_m3d(image_t *image, const char *path)
+int import_as_m3d(image_t *image, const char *path)
 {
 	FILE *file;
 	layer_t *layer, *layer_tmp;
@@ -269,10 +269,7 @@ ferr:   LOG_E("Cannot load from %s: %s", path, strerror(errno));
 	goxel.image->active_material = NULL;
 	goxel.image->cameras = NULL;
 	goxel.image->active_camera = NULL;
-
-	// The file might not have a gxel chunk with box info, and clearing
-	// the box would shrink the canvas. Not sure we want this.
-	//memset(&goxel.image->box, 0, sizeof(goxel.image->box));
+	memset(&goxel.image->box, 0, sizeof(goxel.image->box));
 
 	// iterate on chunks, simply skip those we don't care about
 	layer = NULL;
@@ -650,7 +647,7 @@ void m3d_freestr(m3d_strtable_t *tbl)
 #define WRITE(type, v, file) \
 	({ type v_ = v; fwrite(&v_, sizeof(v_), 1, file);})
 
-static int export_as_m3d(const image_t *img, const char *path)
+int export_as_m3d(const image_t *img, const char *path)
 {
 	FILE *out;
 	uint8_t *data = NULL, *comp = NULL, *chunk;
@@ -894,7 +891,7 @@ memerr:             m3d_freestr(&str);
 				memcpy(chunk + 8, &str.str[m3d_getstr(&str, layer->name)], 4);
 			i = xmin - xmina; memcpy(chunk + 12, &i, 4);
 			i = ymin - ymina; memcpy(chunk + 16, &i, 4);
-			i = zmin - zmina; memcpy(chunk + 20, &i, 4);
+			i = -(zmax - zmina); memcpy(chunk + 20, &i, 4);
 			memcpy(chunk + 24, &xsiz, 4);
 			memcpy(chunk + 28, &ysiz, 4);
 			memcpy(chunk + 32, &zsiz, 4);
@@ -1008,71 +1005,71 @@ memerr:             m3d_freestr(&str);
 }
 
 static void _save_model_wrapper(void) {
-    const char *path = goxel.image->path;
-    if (!path) path = sys_get_save_path("m3d\0*.m3d\0", "untitled.m3d");
-    if (!path) return;
-    if (path != goxel.image->path) {
-        free(goxel.image->path);
-        goxel.image->path = strdup(path);
-    }
+	const char *path = goxel.image->path;
+	if (!path) path = sys_get_save_path("m3d\0*.m3d\0", "untitled.m3d");
+	if (!path) return;
+	if (path != goxel.image->path) {
+		free(goxel.image->path);
+		goxel.image->path = strdup(path);
+	}
 
-    export_as_m3d(goxel.image, goxel.image->path);
-    goxel.image->saved_key = image_get_key(goxel.image);
-    sys_on_saved(path);
+	export_as_m3d(goxel.image, goxel.image->path);
+	goxel.image->saved_key = image_get_key(goxel.image);
+	sys_on_saved(path);
 }
 
 static void _new_model_wrapper(void) {
-    goxel_reset();
+	goxel_reset();
 }
 
 static void _save_model_as_wrapper(void)
 {
-    const char *path;
-    path = sys_get_save_path("m3d\0*.m3d\0", "untitled.m3d");
-    if (!path) return;
-    if (path != goxel.image->path) {
-        free(goxel.image->path);
-        goxel.image->path = strdup(path);
-    }
-    export_as_m3d(goxel.image, goxel.image->path);
-    goxel.image->saved_key = image_get_key(goxel.image);
-    sys_on_saved(path);
+	const char *path;
+	path = sys_get_save_path("m3d\0*.m3d\0", "untitled.m3d");
+	if (!path) return;
+	if (path != goxel.image->path) {
+		free(goxel.image->path);
+		goxel.image->path = strdup(path);
+	}
+	export_as_m3d(goxel.image, goxel.image->path);
+	goxel.image->saved_key = image_get_key(goxel.image);
+	sys_on_saved(path);
 }
 
 static void _open_model_wrapper(void)
 {
-    const char *path;
-    path = noc_file_dialog_open(NOC_FILE_DIALOG_OPEN, "m3d\0*.m3d\0", NULL, NULL);
-    if (!path) return;
-    image_delete(goxel.image);
-    goxel.image = image_new();
-    import_as_m3d(goxel.image, path);
+	const char *path;
+	path = noc_file_dialog_open(NOC_FILE_DIALOG_OPEN, "m3d\0*.m3d\0", NULL, NULL);
+	if (!path) return;
+	image_delete(goxel.image);
+	goxel.image = image_new();
+	import_as_m3d(goxel.image, path);
 
-    if (goxel.image->path != NULL)
-	    free(goxel.image->path);
+	if (goxel.image->path != NULL)
+		free(goxel.image->path);
 
-    goxel.image->path = strdup(path);
+	goxel.image->path = strdup(path);
 }
 
 ACTION_REGISTER(open,
-    .help = "Open an image",
-    .cfunc = _open_model_wrapper,
-    .default_shortcut = "Ctrl O",
+	.help = "Open an image",
+	.cfunc = _open_model_wrapper,
+	.default_shortcut = "Ctrl O",
 )
 
 ACTION_REGISTER(save_as,
-    .help = "Save the image as",
-    .cfunc = _save_model_as_wrapper,
+	.help = "Save the image as",
+	.cfunc = _save_model_as_wrapper,
 )
 
 ACTION_REGISTER(save,
-    .help = "Save the image",
-    .cfunc = _save_model_wrapper,
-    .default_shortcut = "Ctrl S"
+	.help = "Save the image",
+	.cfunc = _save_model_wrapper,
+	.default_shortcut = "Ctrl S"
 )
 
 ACTION_REGISTER(reset,
-    .help = "New",
-    .cfunc = _new_model_wrapper,
-    .default_shortcut = "Ctrl N"
+	.help = "New",
+	.cfunc = _new_model_wrapper,
+	.default_shortcut = "Ctrl N"
 )
