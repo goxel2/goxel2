@@ -232,7 +232,7 @@ void palette_load_all(palette_t **list)
 		asprintf(&dir, "%s/palettes/", sys_get_user_dir());
 
 		// if there are 0 files in palettes dir, extract them.
-		if (sys_list_dir(dir, on_palette2, list) == 0) {
+		if (sys_list_dir(dir, on_palette2, list) <= 0) {
 			sys_make_dir(dir);
 			assets_list("data/palettes/", list, on_palette3);
 		}
@@ -242,7 +242,9 @@ void palette_load_all(palette_t **list)
 		asprintf(&dir, "%s/lospec/", sys_get_user_dir());
 		sys_list_dir(dir, on_palette2, list);
 		free(dir);
-	} else { // Else Use Built-in
+	}
+	// if everything failed, just use the built-on ones
+	if(!*list || (*list)->size < 1) {
 		assets_list("data/palettes/", list, on_palette);
 	}
 }
