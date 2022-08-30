@@ -6,7 +6,6 @@ goxel2 is a voxel art editor & started as a fork of [goxel](https://github.com/g
 [![Nightly Release](https://github.com/goxel2/goxel2/actions/workflows/nightly.yml/badge.svg)](https://github.com/goxel2/goxel2/actions/workflows/nightly.yml)
 
 [![Open Issues](https://img.shields.io/github/issues/goxel2/goxel2)](https://github.com/goxel2/goxel2/issues)
-[![Discord Chat](https://img.shields.io/discord/998971119623209090?color=7289DA&label=discord)](https://discord.gg/YXx3afnzzW)
 [![Total Downloads](https://img.shields.io/github/downloads/goxel2/goxel2/total)](https://github.com/goxel2/goxel2/releases)
 
 Official webpage: https://goxel2.github.io
