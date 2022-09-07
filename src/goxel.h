@@ -615,8 +615,8 @@ int goxel_export_to_file(const char *path, const char *format);
 // Render the view into an RGB[A] buffer.
 void goxel_render_to_buf(uint8_t *buf, int w, int h, int bpp);
 
-int export_as_gox(const image_t *img, const char *path);
-int import_as_gox(image_t *img, const char *path);
+int export_as_m3d(const image_t *img, const char *path);
+int import_as_m3d(image_t *img, const char *path);
 
 // Iter info of a gox file, without actually reading it.
 // For the moment only returns the image preview if available.

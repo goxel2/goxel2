@@ -1121,8 +1121,8 @@ int goxel_import_file(const char *path, const char *format)
 	const file_format_t *f;
 	int err;
 
-	if (str_endswith(path, ".gox")) {
-		return import_as_gox(goxel.image, path);
+	if (str_endswith(path, ".m3d")) {
+		return import_as_m3d(goxel.image, path);
 	}
 	f = file_format_for_path(path, format, "r");
 	if (!f) return -1;
