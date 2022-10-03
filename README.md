@@ -1,6 +1,6 @@
 # Goxel2
 
-The Project is Not Avtively Maintained Any PRs Would Be Happily Accepted Or Anyone Who Wants The Ownership Of The Repo To Continue The Development Can Reach Me Out In Issues.
+The Project is Not Actively Maintained Any PRs Would Be Happily Accepted Or Anyone Who Wants The Ownership Of The Repo To Continue The Development Can Reach Me Out In Issues.
 
 goxel2 is a voxel art editor & started as a fork of [goxel](https://github.com/guillaumechereau/goxel/)
 
